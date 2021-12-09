@@ -4,10 +4,9 @@ class FieldModel {
   final int row;
   final int column;
   final List<FieldModel> neighbors = [];
-
   bool _open = false;
-  bool _checked = false;
   bool _mined = false;
+  bool _checked = false;
   bool _exploded = false;
 
   FieldModel({
@@ -19,8 +18,8 @@ class FieldModel {
   bool get mined => _mined;
   bool get checked => _checked;
   bool get exploded => _exploded;
-  void underMine() => _mined = true;
-  void changeChecked() => _mined = !mined;
+  void undermine() => _mined = true;
+  void changeChecked() => _checked = !_checked;
   bool get neighborhoodSecure => neighbors.every((element) => !element._mined);
   int get quantityMinesInTheNeighborhood =>
       neighbors.where((element) => element.mined).length;
@@ -47,22 +46,20 @@ class FieldModel {
     if (neighborhoodSecure) neighbors.forEach((element) => element.toOpen());
   }
 
-  void revelMines() {
-    if (_mined) {
-      _open = true;
-    }
+  void revelMineBombs() {
+    if (_mined) _open = true;
   }
 
   void restart() {
     _open = false;
-    _checked = false;
     _mined = false;
+    _checked = false;
     _exploded = false;
   }
 
   bool get resolved {
-    bool minedAndChecked = mined && checked;
     bool secureAndOpen = !mined && open;
+    bool minedAndChecked = mined && checked;
     return minedAndChecked || secureAndOpen;
   }
 }
