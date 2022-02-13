@@ -1,45 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_minesweeper/app/models/board_model.dart';
 import 'package:flutter_minesweeper/app/models/field_model.dart';
 import 'package:flutter_minesweeper/app/models/explosion_exception.dart';
-import 'package:flutter_minesweeper/app/common/widgets/field_widget.dart';
+import 'package:flutter_minesweeper/app/common/widgets/board_widget.dart';
 import 'package:flutter_minesweeper/app/common/widgets/result_widget.dart';
 
-class MinesWeeperPage extends StatelessWidget {
+class MinesWeeperPage extends StatefulWidget {
   const MinesWeeperPage({Key? key}) : super(key: key);
 
+  @override
+  State<MinesWeeperPage> createState() => _MinesWeeperPageState();
+}
+
+class _MinesWeeperPageState extends State<MinesWeeperPage> {
+  bool? _winner;
+  BoardModel? _board;
+
   void _restart() {
-    print('Restart');
+    setState(() {
+      _winner = null;
+      _board?.restart();
+    });
   }
 
   void _toOpen(FieldModel field) {
-    print('to open!');
+    if (_winner != null) {
+      return;
+    }
+
+    setState(() {
+      try {
+        field.toOpen();
+        if (_board!.resolved) {
+          _winner = true;
+        }
+      } on ExplosionException {
+        _winner = false;
+        _board?.toRevelMines();
+      }
+    });
   }
 
   void _changeChecked(FieldModel field) {
-    print('_changeChecked');
+    if (_winner != null) {
+      return;
+    }
+
+    setState(() {
+      field.changeChecked();
+      if (_board!.resolved) {
+        _winner = true;
+      }
+    });
+  }
+
+  BoardModel? _getBoard(double width, double height) {
+    if (_board == null) {
+      int columns = 15;
+      double fieldSize = width / columns;
+      int rows = (height / fieldSize).floor();
+
+      _board = BoardModel(
+        rows: rows,
+        columns: columns,
+        minesQuantity: 15,
+      );
+    }
+
+    return _board;
   }
 
   @override
   Widget build(BuildContext context) {
-    FieldModel neighbor1 = FieldModel(column: 0, row: 1);
-    neighbor1.undermine();
-
-    FieldModel field = FieldModel(row: 0, column: 0);
-    field.addNeighbor(neighbor1);
-
-    try {
-      // field.undermine();
-      field.changeChecked();
-    } on ExplosionException {}
-
     return Scaffold(
       appBar: ResultWidget(
-        winner: null,
+        winner: _winner,
         onRestart: _restart,
       ),
-      body: Container(
-        child: FieldWidget(
-          fieldModel: field,
+      body: LayoutBuilder(
+        builder: (context, constraints) => BoardWidget(
+          boardModel: _getBoard(
+            constraints.maxWidth,
+            constraints.maxHeight,
+          ),
           onOpen: _toOpen,
           onChangeChecked: _changeChecked,
         ),

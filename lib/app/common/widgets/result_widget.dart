@@ -46,7 +46,7 @@ class ResultWidget extends StatelessWidget implements PreferredSizeWidget {
                 color: Colors.black,
                 size: 35,
               ),
-              onPressed: () => onRestart,
+              onPressed: () => onRestart(),
             ),
           ),
         ),
