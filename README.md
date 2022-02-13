@@ -25,8 +25,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Reference of study and create.
 
-[Curso Flutter - Projeto COMPLETO Passo a Passo [Campo Minado]](https://www.youtube.com/watch?v=i3w3Wnouowo&ab_channel=Cod3rCursos)
-[Aprenda Flutter e Desenvolva Apps Para Android e IOS 2021](https://www.udemy.com/course/curso-flutter/)
+- [Curso Flutter - Projeto COMPLETO Passo a Passo [Campo Minado]](https://www.youtube.com/watch?v=i3w3Wnouowo&ab_channel=Cod3rCursos)
+- [Aprenda Flutter e Desenvolva Apps Para Android e IOS 2021](https://www.udemy.com/course/curso-flutter/)
 
 Section: Minesweeper project.
 
