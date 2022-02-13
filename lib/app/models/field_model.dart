@@ -1,13 +1,13 @@
-import 'package:flutter_minesweeper/app/models/explosion_exception.dart';
+import 'explosion_exception.dart';
 
 class FieldModel {
   final int row;
   final int column;
-  final List<FieldModel> neighbors = [];
   bool _open = false;
   bool _mined = false;
   bool _checked = false;
   bool _exploded = false;
+  final List<FieldModel> neighbors = [];
 
   FieldModel({
     required this.row,
@@ -43,7 +43,11 @@ class FieldModel {
       throw ExplosionException();
     }
 
-    if (neighborhoodSecure) neighbors.forEach((element) => element.toOpen());
+    if (neighborhoodSecure) {
+      for (var element in neighbors) {
+        element.toOpen();
+      }
+    }
   }
 
   void revelMineBombs() {

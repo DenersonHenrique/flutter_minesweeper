@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_minesweeper/app/models/field_model.dart';
-import 'package:flutter_minesweeper/app/constants/image_assets.dart';
+import '../../models/field_model.dart';
+import '../../constants/image_assets.dart';
 
 class FieldWidget extends StatelessWidget {
   final FieldModel fieldModel;

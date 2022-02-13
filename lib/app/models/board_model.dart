@@ -21,12 +21,16 @@ class BoardModel {
   }
 
   void restart() {
-    _fields.forEach((element) => element.restart());
+    for (var element in _fields) {
+      element.restart();
+    }
     _sortMines();
   }
 
   void toRevelMines() {
-    _fields.forEach((element) => element.revelMineBombs());
+    for (var element in _fields) {
+      element.revelMineBombs();
+    }
   }
 
   void _createFields() {

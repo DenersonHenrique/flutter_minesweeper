@@ -1,5 +1,5 @@
+import 'field_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_minesweeper/app/common/widgets/field_widget.dart';
 import '../../models/board_model.dart';
 import '../../models/field_model.dart';
 

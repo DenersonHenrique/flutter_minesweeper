@@ -1,9 +1,9 @@
+import '../models/board_model.dart';
+import '../models/field_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_minesweeper/app/models/board_model.dart';
-import 'package:flutter_minesweeper/app/models/field_model.dart';
-import 'package:flutter_minesweeper/app/models/explosion_exception.dart';
-import 'package:flutter_minesweeper/app/common/widgets/board_widget.dart';
-import 'package:flutter_minesweeper/app/common/widgets/result_widget.dart';
+import '../models/explosion_exception.dart';
+import '../common/widgets/board_widget.dart';
+import '../common/widgets/result_widget.dart';
 
 class MinesWeeperPage extends StatefulWidget {
   const MinesWeeperPage({Key? key}) : super(key: key);
@@ -77,14 +77,17 @@ class _MinesWeeperPageState extends State<MinesWeeperPage> {
         winner: _winner,
         onRestart: _restart,
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) => BoardWidget(
-          boardModel: _getBoard(
-            constraints.maxWidth,
-            constraints.maxHeight,
+      body: Container(
+        color: Colors.grey,
+        child: LayoutBuilder(
+          builder: (context, constraints) => BoardWidget(
+            boardModel: _getBoard(
+              constraints.maxWidth,
+              constraints.maxHeight,
+            ),
+            onOpen: _toOpen,
+            onChangeChecked: _changeChecked,
           ),
-          onOpen: _toOpen,
-          onChangeChecked: _changeChecked,
         ),
       ),
     );
